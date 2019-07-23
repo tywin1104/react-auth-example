@@ -6,6 +6,7 @@
     "bcrypt": "^3.0.0",
     "body-parser": "^1.18.3",
     "cookie-parser": "^1.4.3",
+    "cors": "^2.8.5",
     "express": "^4.16.3",
     "jsonwebtoken": "^8.3.0",
     "mongoose": "^5.4.3",
@@ -22,7 +23,7 @@
     "server": "node server.js",
     "server-dev": "nodemon server.js"
   },
-  "proxy": "http://localhost:8080",
+  "proxy": "http://localhost:8081",
   "devDependencies": {
     "nodemon": "^1.18.4"
   },

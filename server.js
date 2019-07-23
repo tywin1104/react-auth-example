@@ -6,8 +6,10 @@ const jwt = require('jsonwebtoken');
 const mongoose = require('mongoose');
 const User = require('./models/User');
 const withAuth = require('./middleware');
+var cors = require('cors')
 
 const app = express();
+app.use(cors())
 
 const secret = 'mysecretsshhh';
 
@@ -84,7 +86,7 @@ app.post('/api/authenticate', function(req, res) {
           const token = jwt.sign(payload, secret, {
             expiresIn: '1h'
           });
-          res.cookie('token', token, { httpOnly: true }).sendStatus(200);
+          res.cookie('token', token, {}).sendStatus(200);
         }
       });
     }
@@ -92,7 +94,8 @@ app.post('/api/authenticate', function(req, res) {
 });
 
 app.get('/checkToken', withAuth, function(req, res) {
-  res.sendStatus(200);
+  console.log(`${req.email} Checked`)
+  res.status(200).json({email: req.email});
 });
 
-app.listen(process.env.PORT || 8080);
+app.listen(process.env.PORT || 8081);
