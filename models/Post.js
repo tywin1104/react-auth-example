@@ -8,6 +8,8 @@ var ReplySchema = new mongoose.Schema({
 });
 
 const PostSchema = new mongoose.Schema({
+    username: {type: String, required:true},
+    title: {type: String, required:true},
     content: {type: String, required:true},
     replies: [{type: ReplySchema}],
     timestamp: {type: Date, default: new Date(), required:true}

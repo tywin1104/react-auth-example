@@ -12,7 +12,7 @@ app.use(bodyParser.json());
 app.use(cookieParser());
 
 app.use(cors())
-app.use('/api/', routes);``
+app.use('/api/', routes);
 
 const mongo_uri = 'mongodb://localhost/react-auth';
 mongoose.connect(mongo_uri, { useNewUrlParser: true }, function(err) {
