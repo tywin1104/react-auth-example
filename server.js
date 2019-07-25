@@ -42,8 +42,8 @@ app.get('/api/secret', withAuth, function(req, res) {
 });
 
 app.post('/api/register', function(req, res) {
-  const { email, password } = req.body;
-  const user = new User({ email, password });
+  const { email, password, name } = req.body;
+  const user = new User({ email, password, name });
   user.save(function(err) {
     if (err) {
       console.log(err);
@@ -82,7 +82,10 @@ app.post('/api/authenticate', function(req, res) {
           });
         } else {
           // Issue token
-          const payload = { email };
+          const payload = {
+            email: email,
+            name: user.name
+          };
           const token = jwt.sign(payload, secret, {
             expiresIn: '1h'
           });
@@ -94,8 +97,8 @@ app.post('/api/authenticate', function(req, res) {
 });
 
 app.get('/checkToken', withAuth, function(req, res) {
-  console.log(`${req.email} Checked`)
-  res.status(200).json({email: req.email});
+  console.log(`${req.email} | ${req.name} checked in`)
+  res.status(200).json({email: req.email, name: req.name});
 });
 
 app.listen(process.env.PORT || 8081);
