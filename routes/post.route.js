@@ -17,6 +17,19 @@ router.get('/', function(req, res) {
     })
 })
 
+router.get('/:post_id', function(req,res){
+  Post.findById(req.params.post_id, function(err, post) {
+    if (err) {
+      console.log(err);
+      res.status(500).json({
+        msg: "unable to get a specific post"
+      })
+    } else {
+      res.status(200).json(post)
+    }
+  })
+})
+
 //Create a post
 router.post('/', function(req, res) {
     const {username, title, content} = req.body;

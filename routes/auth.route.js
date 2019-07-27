@@ -5,6 +5,7 @@ const withAuth = require('../middleware');
 const User = require('../models/User')
 module.exports = router;
 
+
 const secret = 'mysecretsshhh';
 
 router.post('/register', function(req, res) {
@@ -19,7 +20,6 @@ router.post('/register', function(req, res) {
       }
     });
 });
-
 
 router.post('/authenticate', function(req, res) {
     const { email, password } = req.body;
