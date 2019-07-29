@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 var ReplySchema = new mongoose.Schema({
     content: {type: String, required:true},
     username: {type: String, required:true},
-    timestamp: {type: Date, default: new Date(), required:true}
+    timestamp: {type: Date, default: Date.now, required:true}
 });
 
 const PostSchema = new mongoose.Schema({
@@ -12,7 +12,7 @@ const PostSchema = new mongoose.Schema({
     title: {type: String, required:true},
     content: {type: String, required:true},
     replies: [{type: ReplySchema}],
-    timestamp: {type: Date, default: new Date(), required:true}
+    timestamp: {type: Date, default: Date.now, required:true}
 });
 
 

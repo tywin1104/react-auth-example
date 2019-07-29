@@ -25,7 +25,7 @@ router.get('/:post_id', function(req,res){
         msg: "unable to get a specific post"
       })
     } else {
-      res.status(200).json(post)
+      res.status(200).json({post})
     }
   })
 })
@@ -83,6 +83,21 @@ router.post('/:post_id/replies', function(req, res) {
       console.log(err);
       res.status(500).json({
         msg: "unable to append replies to the post"
+      })
+    } else {
+      res.status(200).json(post);
+    }
+  });
+})
+
+//Delete reply to a post by ID
+router.delete('/:post_id/replies/:reply_id', function(req, res) {
+  const {replies} = req.body
+  Post.findByIdAndUpdate(req.params.post_id, {$pull: {replies: {_id : req.params.reply_id}}}, {new: true}, function (err, post) {
+    if (err) {
+      console.log(err);
+      res.status(500).json({
+        msg: "unable to remove replies to the post"
       })
     } else {
       res.status(200).json(post);
