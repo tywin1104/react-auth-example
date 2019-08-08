@@ -5,7 +5,7 @@ module.exports = router;
 
 //Get all posts
 router.get('/', function(req, res) {
-    Post.find({}, function(err, posts) {
+    Post.find({}).sort('-timestamp').exec(function(err, posts) {
       if(err) {
         console.log(err)
         res.status(500).json({
@@ -16,6 +16,21 @@ router.get('/', function(req, res) {
       }
     })
 })
+
+//Get specific post
+router.get('/:post_id', function(req, res) {
+  Post.findById(req.params.post_id, function(err, post) {
+    if(err) {
+      console.log(err)
+      res.status(500).json({
+        msg: "unable to get specified post"
+      })
+    }else {
+      res.status(200).json({post})
+    }
+  })
+})
+
 
 //Create a post
 router.post('/', function(req, res) {
@@ -76,3 +91,17 @@ router.post('/:post_id/replies', function(req, res) {
     }
   });
 })
+
+//Delete a reply by id
+router.delete('/:post_id/replies/:reply_id', function(req, res) {
+  Post.findByIdAndUpdate(req.params.post_id, {$pull: {replies: {_id: req.params.reply_id}}}, {new: true}, function (err, post) {
+    if (err) {
+      console.log(err);
+      res.status(500).json({
+        msg: "unable to remove replies"
+      })
+    } else {
+      res.status(200).json(post);
+    }
+  });
+});

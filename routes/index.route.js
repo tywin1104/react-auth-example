@@ -1,6 +1,8 @@
 const express = require('express');
 const postRoutes = require('./post.route');
 const authRoutes = require('./auth.route');
+const announcementRoutes = require('./announcement.route')
+const userRoutes = require('./user.route');
 
 const router = express.Router();
 
@@ -11,5 +13,7 @@ router.get('/health-check', (req, res) =>
 
 router.use('/auth', authRoutes);
 router.use('/posts', postRoutes);
+router.use('/announcements', announcementRoutes)
+router.use('/users', userRoutes);
 
 module.exports = router;
