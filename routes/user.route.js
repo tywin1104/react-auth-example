@@ -46,3 +46,18 @@ router.patch('/:user_id', function(req, res) {
       }
     })
   })
+
+  //Add group info to user
+router.post('/:user_id/groups', function(req, res) {
+  const {group} = req.body
+  User.findByIdAndUpdate(req.params.user_id, {$push: {groups: group}}, {new: true}, function (err, user) {
+    if (err) {
+      console.log(err);
+      res.status(500).json({
+        msg: "unable to add group info to this user"
+      })
+    } else {
+      res.status(200).json(user);
+    }
+  });
+})

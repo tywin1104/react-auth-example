@@ -3,12 +3,21 @@ const bcrypt = require('bcrypt');
 
 const saltRounds = 10;
 
+var GroupSchema = new mongoose.Schema({
+  groupID: {type: mongoose.Schema.Types.ObjectId, required:true},
+  memberType: {type: String, enum: ['MEMBER','GROUPHEAD'], required:true}
+});
+
 const UserSchema = new mongoose.Schema({
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
   name: {type: String, required: true, unique: true},
-  points: {type: Number, default:0}
+  points: {type: Number, default:0},
+  userType: {type: String, enum: ['USER','MOD','ADMIN'], default: 'USER'},
+  groups: [{type: GroupSchema}]
 });
+
+
 
 UserSchema.pre('save', function(next) {
   if (this.isNew || this.isModified('password')) {
