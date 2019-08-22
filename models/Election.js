@@ -4,7 +4,9 @@ const mongoose = require('mongoose');
 var ParticipantSchema = new mongoose.Schema({
     name: {type: String, required: true},
     votes: {type: Number, default: 0},
-    slogan: {type: String}
+    slogan: {type: String},
+    voters: [{type: String}],
+    iconurl: {type: String, default: ''}
 });
 
 const ElectionSchema = new mongoose.Schema({
