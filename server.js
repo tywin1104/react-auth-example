@@ -14,14 +14,16 @@ app.use(cookieParser());
 app.use(cors())
 app.use('/api/', routes);
 
-const mongo_uri = 'mongodb://localhost/react-auth';
-mongoose.connect(mongo_uri, { useNewUrlParser: true }, function(err) {
-  if (err) {
-    throw err;
-  } else {
-    console.log(`Successfully connected to ${mongo_uri}`);
-  }
-});
+const mongo_uri = "mongodb://alen:kootracats@mentr-shard-00-00-2httx.mongodb.net:27017,mentr-shard-00-01-2httx.mongodb.net:27017,mentr-shard-00-02-2httx.mongodb.net:27017/mentr?ssl=true&replicaSet=mentr-shard-0&authSource=admin&retryWrites=true&w=majority";
+
+mongoose.connect(mongo_uri, {});
+
+let db = mongoose.connection;
+
+db.on('error', console.log.bind(console, 'connection error'))
+mongoose.connection.on('connected', ()=> {
+  console.log("connected to db")
+})
 
 
 app.listen(process.env.PORT || 8080);
