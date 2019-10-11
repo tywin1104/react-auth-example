@@ -23,7 +23,7 @@
     "server": "node server.js",
     "server-dev": "nodemon server.js"
   },
-  "proxy": "http://localhost:8081",
+  "proxy": "http://localhost:8080",
   "devDependencies": {
     "nodemon": "^1.18.4"
   },
