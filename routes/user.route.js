@@ -42,16 +42,39 @@ router.patch('/:user_id', function(req, res) {
         update.level = level;
     }
     console.log(update)
-    User.findByIdAndUpdate(req.params.user_id, update, { new: true }, function(err, user) {
-        if (err) {
-            console.log(err)
-            res.status(500).json({
-                msg: "Unable to update user"
-            })
-        } else {
-            res.status(200).json({ user })
+    User.findById(req.params.user_id, function(err, user) {
+        console.log(update)
+        // for(var prop in update) {
+        //     user.prop = update.prop;
+        // }
+        if(update.password) {
+            user.password = update.password;
+        }else if(update.points) {
+            user.points = update.points;
+        }else if(update.level) {
+            user.level = update.level;
         }
+        user.save(function(err, user) {
+            if (err) {
+                console.log(err)
+                res.status(500).json({
+                    msg: "Unable to update user"
+                })
+            } else {
+                res.status(200).json({ user })
+            }
+        })
     })
+    // User.findByIdAndUpdate(req.params.user_id, update, { new: true }, function(err, user) {
+    //     if (err) {
+    //         console.log(err)
+    //         res.status(500).json({
+    //             msg: "Unable to update user"
+    //         })
+    //     } else {
+    //         res.status(200).json({ user })
+    //     }
+    // })
 })
 
 //Add group info to user

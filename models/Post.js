@@ -8,6 +8,7 @@ var ReplySchema = new mongoose.Schema({
 });
 
 const PostSchema = new mongoose.Schema({
+    readOnly: {type: Boolean, default: false},
     username: {type: String, required:true},
     title: {type: String, required:true},
     content: {type: String, required:true},
