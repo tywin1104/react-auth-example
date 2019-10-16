@@ -5,6 +5,7 @@ const mongoose = require('mongoose');
 const routes = require('./routes/index.route');
 var cors = require('cors')
 const app = express();
+const path = require('path');
 
 
 app.set('view engine', 'html')
