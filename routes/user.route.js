@@ -38,7 +38,7 @@ router.patch('/:user_id', function(req, res) {
     let points = req.body.points;
     update = req.body;
     if (points) {
-        let level = 1 + parseInt(points / 10);
+        let level = 1 + parseInt(points / 50);
         update.level = level;
         console.log(update.points)
         
