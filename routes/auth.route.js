@@ -54,7 +54,7 @@ router.post('/authenticate', function(req, res) {
               name: user.name
             };
             const token = jwt.sign(payload, secret, {
-              expiresIn: '1h'
+              expiresIn: '24h'
             });
             res.cookie('token', token, {}).sendStatus(200);
           }

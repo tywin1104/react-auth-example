@@ -7,7 +7,7 @@ var cors = require('cors')
 const app = express();
 
 
-app.set('view engine', 'html')
+app.set('view enpgine', 'html')
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cookieParser());
