@@ -20,6 +20,7 @@ router.use('/announcements', announcementRoutes)
 router.use('/users', userRoutes);
 router.use('/groups', groupRoutes);
 router.use('/elections', electionRoutes);
+router.use('/notifications', notificationsRoutes);
 router.use('/lunchMenus', lunchMenuRoutes);
 
 module.exports = router;
