@@ -4,7 +4,8 @@ const mongoose = require('mongoose');
 var ReplySchema = new mongoose.Schema({
     content: {type: String, required:true},
     username: {type: String, required:true},
-    timestamp: {type: Date, default: Date.now, required:true}
+    timestamp: {type: Date, default: Date.now, required:true},
+    new: { type: Boolean, default: false }
 });
 
 const PostSchema = new mongoose.Schema({

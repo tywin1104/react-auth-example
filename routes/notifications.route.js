@@ -30,13 +30,14 @@ router.get('/new/:username', async function (req, res) {
                 msg: "Unable to get new notifications"
             })
         } else if (posts.length) {
-            let FIVE_MIN = 5 * 60 * 1000;
-            let postsThatHasNewReplies = posts.filter(post => post.replies.filter(reply => (new Date - new Date(reply.timestamp)) <= FIVE_MIN))
+            let ONE_mIN = 60 * 1000;
+            let length = 0;
+            let postsThatHasNewReplies = posts.filter(post => post.replies.map(reply => (new Date - new Date(reply.timestamp)) <= ONE_mIN && reply.new ? length++ : null))
             debugger
             for (let newPost of postsThatHasNewReplies) {
                 await saveNotification(newPost, username)
             }
-            res.status(200).send({ length: postsThatHasNewReplies.length })
+            res.status(200).send({ length })
         } else {
             res.status(404).send()
         }
@@ -60,6 +61,35 @@ const saveNotification = async (newPost, username) => {
     })
 
 }
+
+
+// edit reply to be old
+// set the "new" attribute to false for the given reply _id 
+router.put('/reply/:username/:id', async function (req, res) {
+    console.log('edit reply')
+    const { id, username } = req.params;
+
+    await Post.findOne({ username, 'replies': { $elemMatch: { _id: id, new: true } } }, async (err, post) => {
+        if (err || post == null) {
+            console.log(err)
+            res.status(404).json()
+        } else {
+            let replies = post.replies.map(x => {
+                if(x._id.toString() == id.toString() ){ x.new = false }
+                return x
+            })
+            post.replies = replies
+
+            try {
+                let result = await Post.findByIdAndUpdate(post._id, post)
+                res.status(200).send(result)
+            }
+            catch (err) {
+                console.log(err)
+            }
+        }
+    })
+})
 // // Add Lunch Menu
 // router.post('/', function(req, res) {
 //     const { images } = req.body;
