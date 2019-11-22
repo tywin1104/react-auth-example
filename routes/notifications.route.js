@@ -32,7 +32,7 @@ router.get('/new/:username', async function (req, res) {
         } else if (posts.length) {
             let ONE_mIN = 60 * 1000;
             let length = 0;
-            let postsThatHasNewReplies = posts.filter(post => post.replies.map(reply => (new Date - new Date(reply.timestamp)) <= ONE_mIN && reply.new ? length++ : null))
+            let postsThatHasNewReplies = posts.filter(post => post.replies.map(reply => reply.new ? length++ : null))
             debugger
             for (let newPost of postsThatHasNewReplies) {
                 await saveNotification(newPost, username)
@@ -75,7 +75,7 @@ router.put('/reply/:username/:id', async function (req, res) {
             res.status(404).json()
         } else {
             let replies = post.replies.map(x => {
-                if(x._id.toString() == id.toString() ){ x.new = false }
+                if (x._id.toString() == id.toString()) { x.new = false }
                 return x
             })
             post.replies = replies
