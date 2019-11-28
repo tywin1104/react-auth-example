@@ -34,8 +34,8 @@ router.get('/:post_id', function (req, res) {
 
 //Create a post
 router.post('/', function (req, res) {
-  const { username, title, content } = req.body;
-  const post = new Post({ title, username, content })
+  const { username, title, content,tag } = req.body;
+  const post = new Post({ title, username, content, tag })
   post.save(function (err) {
     if (err) {
       console.log(err);
