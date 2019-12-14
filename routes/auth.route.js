@@ -1,11 +1,9 @@
 const express = require('express');
 const router = express.Router();
-const jwt = require('jsonwebtoken');
-const withAuth = require('../middleware');
+const authenticate = require('../helpers/check-auth');
+const { encode } = require('../helpers/jwt')
 const User = require('../models/User')
 module.exports = router;
-
-const secret = 'mysecretsshhh';
 
 router.post('/register', function(req, res) {
     const { email, password, name } = req.body;
@@ -22,6 +20,7 @@ router.post('/register', function(req, res) {
 
 
 router.post('/authenticate', function(req, res) {
+  console.log('login')
     const { email, password } = req.body;
     User.findOne({ email }, function(err, user) {
       if (err) {
@@ -50,13 +49,13 @@ router.post('/authenticate', function(req, res) {
           } else {
             // Issue token
             const payload = {
+              _id: user._id,
               email: email,
-              name: user.name
+              name: user.name,
+              role:user.userType
             };
-            const token = jwt.sign(payload, secret, {
-              expiresIn: '72h'
-            });
-            res.cookie('token', token, {}).sendStatus(200);
+            res.setHeader('token', encode(payload))
+            res.status(200).send({token:encode(payload)});
           }
         });
       }
@@ -64,7 +63,7 @@ router.post('/authenticate', function(req, res) {
 });
 
 
-router.get('/checkToken', withAuth, function(req, res) {
-    console.log(`${req.email} | ${req.name} checked in`)
-    res.status(200).json({email: req.email, name: req.name});
+router.get('/checkToken', authenticate, function(req, res) {
+    console.log(`${req.user.email} | ${req.user.username} checked in`)
+    res.status(200).json({email: req.user.email, name: req.user.username});
 });

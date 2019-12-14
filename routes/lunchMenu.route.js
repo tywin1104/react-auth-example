@@ -1,6 +1,8 @@
 const express = require('express');
 const LunchMenu = require('../models/LunchMenu')
 const router = express.Router();
+const authenticate = require('../helpers/check-auth')
+
 module.exports = router;
 
 
@@ -20,7 +22,9 @@ router.get('/', function(req, res) {
 
 
 // Add Lunch Menu
-router.post('/', function(req, res) {
+router.post('/', authenticate,function(req, res) {
+    if (req.user.role !== 'MOD' || req.user.role !== 'ADMIN') return res.status(401).send();
+
     const { images } = req.body;
     const menu = new LunchMenu({ images })
     menu.save(function(err) {

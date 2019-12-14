@@ -1,6 +1,8 @@
 const express = require('express');
 const Group = require('../models/Group')
 const router = express.Router();
+const authenticate = require('../helpers/check-auth')
+
 module.exports = router;
 
 //Get all groups
@@ -33,7 +35,7 @@ router.get('/:group_id', function(req, res) {
 
 
 //Create a group
-router.post('/', function(req, res) {
+router.post('/', authenticate, function(req, res) {
     const {title} = req.body;
     const group = new Group({title})
     group.save(function(err) {
@@ -49,7 +51,7 @@ router.post('/', function(req, res) {
 })
 
 //Patch (partial update) a post by id
-router.patch('/:group_id', function(req, res) {
+router.patch('/:group_id', authenticate, function(req, res) {
   Group.findByIdAndUpdate(req.params.group_id, req.body, {new: true}, function (err, group) {
     if (err) {
       console.log(err);
@@ -63,7 +65,7 @@ router.patch('/:group_id', function(req, res) {
 })
 
 //Delete a post by id
-router.delete('/:group_id', function(req, res, next) {
+router.delete('/:group_id', authenticate, function(req, res, next) {
   Group.findByIdAndRemove(req.params.group_id, req.body, function (err, group) {
     if (err) {
       console.log(err);
@@ -78,7 +80,7 @@ router.delete('/:group_id', function(req, res, next) {
 
 
 //Add members to a group by ID
-router.post('/:group_id/members', function(req, res) {
+router.post('/:group_id/members', authenticate, function(req, res) {
   const {username} = req.body
   if(!username) {
       res.status(500).json({
@@ -98,7 +100,7 @@ router.post('/:group_id/members', function(req, res) {
 })
 
 //Add announcement to a group by ID
-router.post('/:group_id/announcements', function(req, res) {
+router.post('/:group_id/announcements', authenticate, function(req, res) {
     const {announcement} = req.body
     Group.findByIdAndUpdate(req.params.group_id, {$push: {announcements: announcement}}, {new: true}, function (err, group) {
       if (err) {
@@ -111,4 +113,5 @@ router.post('/:group_id/announcements', function(req, res) {
       }
     });
   })
+
 

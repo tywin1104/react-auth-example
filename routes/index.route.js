@@ -4,8 +4,8 @@ const authRoutes = require('./auth.route');
 const announcementRoutes = require('./announcement.route')
 const userRoutes = require('./user.route');
 const groupRoutes = require('./group.route');
-const notificationsRoutes = require('./notifications.route');
 const electionRoutes = require('./election.route')
+const notificationsRoutes = require('./notifications.route')
 const lunchMenuRoutes = require('./lunchMenu.route')
 
 const router = express.Router();
