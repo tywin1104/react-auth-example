@@ -11,6 +11,8 @@
     "jsonwebtoken": "^8.3.0",
     "mongoose": "^5.6.12",
     "openweather-apis": "^4.0.0",
+    "passport": "^0.4.0",
+    "passport-jwt": "^4.0.0",
     "path": "^0.12.7",
     "react": "^16.4.2",
     "react-dom": "^16.4.2",
