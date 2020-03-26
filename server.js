@@ -21,7 +21,7 @@ app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '/build/index.html'));
 });
 
- const mongo_uri = "mongodb://alen:kootracats@mentr-shard-00-00-2httx.mongodb.net:27017,mentr-shard-00-01-2httx.mongodb.net:27017,mentr-shard-00-02-2httx.mongodb.net:27017/mentr?ssl=true&replicaSet=mentr-shard-0&authSource=admin&retryWrites=true&w=majority";
+ const mongo_uri = "mongodb://alen:Playminecraft123@mentr-shard-00-00-2httx.mongodb.net:27017,mentr-shard-00-01-2httx.mongodb.net:27017,mentr-shard-00-02-2httx.mongodb.net:27017/mentr?ssl=true&replicaSet=mentr-shard-0&authSource=admin&retryWrites=true&w=majority";
 //const mongo_uri = 'mongodb://localhost:27017/ucc'
 mongoose.connect(mongo_uri, {});
 
